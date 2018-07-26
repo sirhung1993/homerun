@@ -60,8 +60,3 @@ typings/
 
 # next.js build output
 .next
-
-# powershell
-powershell/
-# react src file
-react/src
