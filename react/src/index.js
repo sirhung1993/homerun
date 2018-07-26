@@ -28,6 +28,22 @@ class Computer extends React.Component {
   }
 }
 
+class Banner extends React.Component {
+  render(){
+    return(
+      <div>
+        <img 
+          src="images/homerunlogo.png" 
+          alt="homerun logo" 
+          href="https://www.facebook.com/homerundienbien"
+          target="_blank"
+          height="400"
+          width="1600"
+        />
+      </div>
+    )
+  }
+}
 class ComputersRow extends React.Component {
 
   render() {
@@ -109,7 +125,10 @@ class HomePage extends React.Component {
 
     return (
       <div>
-        {DisplayRows()}
+        <Banner />
+        <div className="w3-row">
+          {DisplayRows()}
+        </div>
       </div>
     )
   }
