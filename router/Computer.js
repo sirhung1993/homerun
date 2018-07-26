@@ -27,8 +27,8 @@ router.get('/getstatus', (req, res, next) => {
     res.status(200).json({
         OK : {
             ComputerStatus: ComputerStatus,
-            MaxComputers: (Conf.Secret.MAX_COMPUTER > 0) || 39,
-            NumberComputerOnARow: (Conf.Secret.COMPUTER_PER_ROW > 0) || 5
+            MaxComputers: (Conf.Secret.MAX_COMPUTER > 0) ? Conf.Secret.MAX_COMPUTER : 39,
+            NumberComputerOnARow: (Conf.Secret.COMPUTER_PER_ROW > 0) ? Conf.Secret.NumberComputerOnARow : 5
         } 
     })
 })
