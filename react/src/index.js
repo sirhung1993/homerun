@@ -6,19 +6,21 @@ import './w3.css'
 class Computer extends React.Component {
   render() {
     const divStyleRow = {
-      width: '20%',
+      width: '10%',
     }
-    const status = this.props.isAvailable === 1 || this.props.isAvailable === "true"
+    const isOn = this.props.isAvailable
+    const status = isOn || isOn === 1 || isOn === "true"
     const name = this.props.computerName
     const isAvailable = status ? 'Available' : 'Unavailable'
     const altComment = `Computer ${name}: ${isAvailable} `
-    const computerColor = 'w3-col w3-margin w3-row ' + (status ? ' w3-green ' : ' w3-grey ')
+    const computerColor = 'w3-col w3-margin w3-row ' + (status ? ' w3-yellow ' : ' w3-green ')
+    const textColor = " w3-center w3-xlarge " + (status ? ' w3-red ' : ' w3-text-black ')
     return (
       <div className={computerColor}  style={divStyleRow}>
         <div>
           <img  src="images/computer.png" alt={altComment} height="75" width="75"/>
         </div>
-        <div className="w3-center w3-xlarge">
+        <div className={textColor}>
           {name}
         </div>
       </div>
@@ -27,37 +29,15 @@ class Computer extends React.Component {
 }
 
 class ComputersRow extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      ComputerStatus: {}
-    }
-  }
-
-  componentDidMount() {
-    setInterval(() => this.getComputerStatus(), 5000)
-  }
-
-  getComputerStatus() {
-    // Get the passwords and store them in state
-    fetch('/info/getstatus')
-      .then(res => res.json())
-      .then(data => (
-        this.setState({
-          ComputerStatus: data.OK.ComputerStatus
-        })
-      ))
-  }
 
   render() {
-    const ComputerStatus= this.state.ComputerStatus
-    const ComputerName = Object.keys(ComputerStatus).sort()
-
+    const ComputerName= this.props.ComputerName.slice()
+    const NotAvailable = this.props.NotAvailable
     const ArrComputer = ComputerName.map((val, index) => {
       return (
         <Computer 
-          computerName={val}
-          isAvailable={ComputerStatus[val]}
+          computerName={val ? val : NotAvailable}
+          isAvailable={(val && val !== NotAvailable) ? true : false}
           key={index}
         />
       )
@@ -73,12 +53,14 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      ComputerStatus: {}
+      ComputerStatus: {},
+      MaxComputers: 39,
+      NumberComputerOnARow: 5
     }
   }
 
   componentDidMount() {
-    setInterval(() => this.getComputerStatus(), 60000)
+    setInterval(() => this.getComputerStatus(), 5000)
   }
 
   getComputerStatus() {
@@ -87,15 +69,47 @@ class HomePage extends React.Component {
       .then(res => res.json())
       .then(data => (
         this.setState({
-          ComputerStatus: data.OK.ComputerStatus
+          ComputerStatus: data.OK.ComputerStatus,
+          MaxComputers: (data.OK.MaxComputers > 0) ? data.OK.MaxComputers : 39,
+          NumberComputerOnARow: (data.OK.NumberComputerOnARow > 0) ? data.OK.NumberComputerOnARow : 5
         })
       ))
   }
   render() {
-    const 
+    const ComputerStatus = this.state.ComputerStatus
+    const ComputerName = Object.keys(ComputerStatus)
+    const NumAvai = ComputerName.length
+    const MaxComputers = this.state.MaxComputers
+    const NumberComputerOnARow = this.state.NumberComputerOnARow
+    const NumberRow = Math.ceil(MaxComputers / NumberComputerOnARow)
+    const NotOn = 'Unknown'
+
+    for (var i = NumAvai; i < MaxComputers; i++) {
+      ComputerName.push(NotOn)
+    }
+    const DisplayRows = () => {
+      const Rows = []
+      for(var i = 0; i < NumberRow; i++) {
+        const Row = []
+        for (var k =0; k < NumberComputerOnARow; k++) {
+          Row.push(ComputerName.shift())
+        }
+        Rows.push(Row)
+      }
+      return Rows.map((row, index) => {
+        return (
+          <ComputersRow 
+            ComputerName={row}
+            NotAvailable={NotOn}
+            key = {index}
+          />
+        )
+      })
+    }
+
     return (
       <div>
-
+        {DisplayRows()}
       </div>
     )
   }
@@ -103,6 +117,6 @@ class HomePage extends React.Component {
 // ========================================
 
 ReactDOM.render(
-  <ComputersRow />,
+  <HomePage />,
   document.getElementById('root')
 )
