@@ -9,7 +9,8 @@
 
 $RunAtSecond = [Int] 30 
 $SecondsInMinute = 60
-$jsonObj = @{computerName=$env:USERNAME;token=$env:TOKEN; isAvailable=true} | ConvertTo-Json
+$jsonObj = @{computerName=$env:USERNAME;token=$env:TOKEN; isAvailable= 1} | ConvertTo-Json
+$HOMERUN = "https://homeruncyber.herokuapp.com/info/updatestatus"
 while (1)
 {
     # If the next period isn't here yet, sleep so we don't consume CPU
@@ -22,6 +23,6 @@ while (1)
     # Call your batch file here
     #echo $logOffDate
     echo $lastRunTime
-    Invoke-RestMethod -Uri http://localhost:5000/info/updatestatus -Method Post -Body $jsonObj -ContentType 'application/json'
+    Invoke-RestMethod -Uri $HOMERUN -Method Post -Body $jsonObj -ContentType 'application/json'
     Start-Sleep -Seconds 1
 }
