@@ -1,0 +1,15 @@
+{
+  "name": "homerun-job",
+  "version": "1.0.0",
+  "description": "job on client ",
+  "main": "Job.js",
+  "dependencies": {
+    "request": "^2.87.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bui Viet Hung",
+  "license": "MIT"
+}

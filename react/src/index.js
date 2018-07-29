@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import './w3.css'
 
+const RefreshTimeInSecond = 5
+
 class Computer extends React.Component {
   render() {
     const divStyleRow = {
@@ -14,7 +16,7 @@ class Computer extends React.Component {
     const isAvailable = status ? 'Available' : 'Unavailable'
     const altComment = `Computer ${name}: ${isAvailable} `
     const computerColor = 'w3-col w3-margin w3-row ' + (status ? ' w3-yellow ' : ' w3-green ')
-    const textColor = " w3-center w3-xlarge " + (status ? ' w3-red ' : ' w3-text-black ')
+    const textColor = ' w3-center w3-xlarge ' + (status ? ' w3-red ' : ' w3-text-black ')
     return (
       <div className={computerColor}  style={divStyleRow}>
         <div>
@@ -32,27 +34,32 @@ class Banner extends React.Component {
   render(){
     return(
       <div>
-        <img 
-          src="images/homerunlogo.png" 
-          alt="homerun logo" 
-          href="https://www.facebook.com/homerundienbien"
-          target="_blank"
-          height="400"
-          width="1600"
-        />
+        <a href="https://www.facebook.com/homerundienbien" target="_blank">
+          <img 
+            src="images/homerunlogo.png" 
+            alt="homerun logo" 
+            height="400"
+            width="1600"
+          />
+        </a>
       </div>
     )
   }
 }
 class ComputersRow extends React.Component {
-
   render() {
     const ComputerName= this.props.ComputerName.slice()
     const NotAvailable = this.props.NotAvailable
+    const NotExist = "Not exist anymore!"
     const ArrComputer = ComputerName.map((val, index) => {
+      var tempVal = val
+      if (tempVal === undefined) {
+        tempVal = NotExist
+        return
+      }
       return (
         <Computer 
-          computerName={val ? val : NotAvailable}
+          computerName={tempVal}
           isAvailable={(val && val !== NotAvailable) ? true : false}
           key={index}
         />
@@ -76,7 +83,8 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(() => this.getComputerStatus(), 5000)
+    this.getComputerStatus()
+    setInterval(() => this.getComputerStatus(), RefreshTimeInSecond*1000)
   }
 
   getComputerStatus() {

@@ -1,0 +1,1 @@
+CreateObject("Wscript.Shell").Run "RunJobNodeJs.bat",0,True

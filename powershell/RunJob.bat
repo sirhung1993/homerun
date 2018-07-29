@@ -1,1 +1,0 @@
-PowerShell.exe ./ClientJob.ps1

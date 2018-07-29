@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const Conf = require('../configurations/Configuration.js')
 const TimeDelayInMs = 1000
-const RefreshDelay = 180000 
+const RefreshDelayInSecond = 60 
 let ComputerStatus = {}
 
-setInterval(() => ComputerStatus = {}, RefreshDelay)
+setInterval(() => ComputerStatus = {}, RefreshDelayInSecond * 1000)
 
 router.post('/updatestatus', (req, res, next) => {
     let computerName = req.body.computerName
