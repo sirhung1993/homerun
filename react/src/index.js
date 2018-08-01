@@ -48,19 +48,17 @@ class Banner extends React.Component {
 }
 class ComputersRow extends React.Component {
   render() {
-    const ComputerName= this.props.ComputerName.slice()
-    const NotAvailable = this.props.NotAvailable
-    const NotExist = "Not exist anymore!"
-    const ArrComputer = ComputerName.map((val, index) => {
-      var tempVal = val
-      if (tempVal === undefined) {
-        tempVal = NotExist
-        return
+    const ComputerStatus= this.props.ComputerName.slice()
+    const ArrComputer = ComputerStatus.map((val, index) => {
+      const computerName = Object.keys(val).shift()
+      const status = val[computerName]
+      if (computerName ===  'undefined') {
+        return null
       }
       return (
         <Computer 
-          computerName={tempVal}
-          isAvailable={(val && val !== NotAvailable) ? true : false}
+          computerName={computerName}
+          isAvailable={status}
           key={index}
         />
       )
@@ -116,7 +114,10 @@ class HomePage extends React.Component {
       for(var i = 0; i < NumberRow; i++) {
         const Row = []
         for (var k =0; k < NumberComputerOnARow; k++) {
-          Row.push(ComputerName.shift())
+          const tempName = ComputerName.shift()
+          const obj = {}
+          obj[tempName] = ComputerStatus[tempName]
+          Row.push(obj)
         }
         Rows.push(Row)
       }
