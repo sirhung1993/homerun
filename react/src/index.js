@@ -8,22 +8,25 @@ const RefreshTimeInSecond = 5
 class Computer extends React.Component {
   render() {
     const divStyleRow = {
-      width: '10%',
+      width: '15%',
     }
     const isOn = this.props.isAvailable
     const status = isOn || isOn === 1 || isOn === "true"
     const name = this.props.computerName
     const isAvailable = status ? 'Available' : 'Unavailable'
     const altComment = `Computer ${name}: ${isAvailable} `
-    const computerColor = 'w3-col w3-margin w3-row ' + (status ? ' w3-yellow ' : ' w3-green ')
-    const textColor = ' w3-center w3-xlarge ' + (status ? ' w3-red ' : ' w3-text-black ')
+    const computerColor = 'w3-col w3-margin w3-row w3-center ' + (status ? ' w3-yellow ' : ' w3-green ')
+    const textColor = ' w3-center computer-name w3-margin-top ' + (status ? ' w3-red w3-text-black' : ' w3-text-black ')
+    const styleText = {
+      fontSize: '2vw',
+    }
     return (
       <div className={computerColor}  style={divStyleRow}>
         <div>
-          <img  src="images/computer.png" alt={altComment} height="75" width="75"/>
+          <img  src="images/computer.png" alt={altComment} className=" auto "/>
         </div>
-        <div className={textColor}>
-          {name}
+        <div>
+          <p className={textColor}> {name} </p>
         </div>
       </div>
     )
@@ -33,13 +36,12 @@ class Computer extends React.Component {
 class Banner extends React.Component {
   render(){
     return(
-      <div>
-        <a href="https://www.facebook.com/homerundienbien" target="_blank">
+      <div className="w3-conainer">
+        <a href="https://www.facebook.com/homerundienbien" target="_blank" rel="noopener noreferrer">
           <img 
             src="images/homerunlogo.png" 
             alt="homerun logo" 
-            height="400"
-            width="1600"
+            className = " auto-banner "
           />
         </a>
       </div>
@@ -99,7 +101,15 @@ class HomePage extends React.Component {
   }
   render() {
     const ComputerStatus = this.state.ComputerStatus
-    const ComputerName = Object.keys(ComputerStatus)
+    const ComputerName = Object.keys(ComputerStatus).sort((a, b) => {
+      if (a.length === b.length) {
+        return a > b
+      } else if (a.length > b.length) {
+        return 1
+      } else {
+        return -1
+      }
+    })
     const NumAvai = ComputerName.length
     const MaxComputers = this.state.MaxComputers
     const NumberComputerOnARow = this.state.NumberComputerOnARow
@@ -123,11 +133,11 @@ class HomePage extends React.Component {
       }
       return Rows.map((row, index) => {
         return (
-          <ComputersRow 
-            ComputerName={row}
-            NotAvailable={NotOn}
-            key = {index}
-          />
+            <ComputersRow 
+              ComputerName={row}
+              NotAvailable={NotOn}
+              key = {index}
+            />
         )
       })
     }
@@ -135,7 +145,7 @@ class HomePage extends React.Component {
     return (
       <div>
         <Banner />
-        <div className="w3-row">
+        <div>
           {DisplayRows()}
         </div>
       </div>
