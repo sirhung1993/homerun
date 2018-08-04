@@ -53,6 +53,10 @@ ol, ul {
   }
 }
 
+  .computer-test{
+    font-size: 3vw;
+  }
+
 @media screen and (min-width: 1024px) {
   .computer-name {
     font-size: 3vw;

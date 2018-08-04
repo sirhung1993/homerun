@@ -14,7 +14,7 @@ class Computer extends React.Component {
     const status = isOn || isOn === 1 || isOn === "true"
     const name = this.props.computerName
     const isAvailable = status ? 'Available' : 'Unavailable'
-    const altComment = `Computer ${name}: ${isAvailable} `
+    const altComment = `Computer Name ${name}:: ${isAvailable} `
     const computerColor = 'w3-col computer-margin computer-padding w3-row w3-center ' + (status ? ' w3-yellow ' : ' w3-green ')
     const textColor = ' w3-center computer-name ' + (status ? ' w3-red w3-text-black' : ' w3-text-black ')
     const styleText = {
