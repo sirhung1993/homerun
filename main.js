@@ -24,6 +24,6 @@ app.post('/client', (req, res, next) => {
 })
 
 app.listen(app.get('port'), () => {
-  console.log('Server is running at this : ' + app.get('port'))
+  console.log('Server is running at this server: ' + app.get('port'))
 })
 
