@@ -15,20 +15,20 @@ class Computer extends React.Component {
     const name = this.props.computerName
     const isAvailable = status ? 'Available' : 'Unavailable'
     const altComment = `Computer ${name}: ${isAvailable} `
-    const computerColor = 'w3-col w3-margin w3-row w3-center ' + (status ? ' w3-yellow ' : ' w3-green ')
-    const textColor = ' w3-center computer-name w3-margin-top ' + (status ? ' w3-red w3-text-black' : ' w3-text-black ')
+    const computerColor = 'w3-col computer-margin computer-padding w3-row w3-center ' + (status ? ' w3-yellow ' : ' w3-green ')
+    const textColor = ' w3-center computer-name ' + (status ? ' w3-red w3-text-black' : ' w3-text-black ')
     const styleText = {
       fontSize: '2vw',
     }
     return (
-      <div className={computerColor}  style={divStyleRow}>
-        <div>
-          <img  src="images/computer.png" alt={altComment} className=" auto "/>
+        <div className={computerColor}  style={divStyleRow}>
+          <div>
+            <img  src="images/computer.png" alt={altComment} className=" auto "/>
+          </div>
+          <div className={textColor}>
+            {name}
+           </div>
         </div>
-        <div>
-          <p className={textColor}> {name} </p>
-        </div>
-      </div>
     )
   }
 }
@@ -50,6 +50,9 @@ class Banner extends React.Component {
 }
 class ComputersRow extends React.Component {
   render() {
+    const divSideCol = {
+      width: '12.5%'
+    }
     const ComputerStatus= this.props.ComputerName.slice()
     const ArrComputer = ComputerStatus.map((val, index) => {
       const computerName = Object.keys(val).shift()
@@ -67,7 +70,13 @@ class ComputersRow extends React.Component {
     })
     return(
       <div className="w3-row">
+        <div className="w3-col" style={divSideCol}>
+          <p> </p>
+        </div>
         {ArrComputer}
+        <div className="w3-col" style={divSideCol}>
+          <p> </p>
+        </div>
       </div>
     )
   }
