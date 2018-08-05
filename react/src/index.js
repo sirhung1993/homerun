@@ -109,16 +109,23 @@ class HomePage extends React.Component {
       ))
   }
   render() {
-    const ComputerStatus = this.state.ComputerStatus
-    const ComputerName = Object.keys(ComputerStatus).sort((a, b) => {
-      if (a.length === b.length) {
-        return a > b
-      } else if (a.length > b.length) {
-        return 1
-      } else {
-        return -1
-      }
-    })
+    const ComputerStatus = Object.assign(this.state.ComputerStatus)
+    // const NumberFromComputerName = Object.keys(ComputerStatus)
+    //   .map((ele) => {
+    //     return parseInt(ele.match(/\d+/))
+    //   }).sort((a,b) => {return a - b})
+    // console.log(NumberFromComputerName)
+                        
+    const ComputerName = Object.keys(ComputerStatus).sort()
+    // .sort((a, b) => {
+    //   if (a.length === b.length) {
+    //     return a > b
+    //   } else if (a.length > b.length) {
+    //     return a < b
+    //   } else {
+    //     return a > b
+    //   }
+    // })
     const NumAvai = ComputerName.length
     const MaxComputers = this.state.MaxComputers
     const NumberComputerOnARow = this.state.NumberComputerOnARow
